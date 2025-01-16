@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ol-control {
+  @apply bg-white bg-opacity-80 rounded shadow-md;
+}
+
+.ol-zoom {
+  @apply left-auto right-2 top-2;
+}
+
+.ol-zoom button {
+  @apply bg-white text-gray-700 hover:bg-gray-100 w-8 h-8 m-1 rounded;
+}
+
+.ol-attribution {
+  @apply text-xs bg-white bg-opacity-80 rounded shadow-md;
+}
+
+.ol-attribution button {
+  @apply bg-white text-gray-700 hover:bg-gray-100 w-6 h-6 rounded;
+}

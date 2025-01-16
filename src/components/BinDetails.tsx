@@ -36,5 +36,5 @@ export default function BinDetails({ bin }: BinDetailsProps) {
         <p>Last Updated: {new Date(bin.lastUpdated).toLocaleString()}</p>
       </div>
     </div>
-  );
+  );  
 }

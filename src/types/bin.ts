@@ -29,12 +29,9 @@ export interface SmartBin {
 //   lastCollected: string;
 // }
 
-export interface RecyclingCenter {
+export interface RecycleCenter {
   id: string;
-  location: {
-    lat: number;
-    lng: number;
-    address: string;
-  };
+  address: string;
+  latitude: number;
+  longitude: number;
 }
-

@@ -34,7 +34,7 @@ export default function Dashboard({ bins }: DashboardProps) {
             <XAxis dataKey="area" />
             <YAxis />
             <Tooltip />
-            <Bar dataKey="avgFillLevel" fill="#3B82F6" name="Average Fill Level (%)" />
+            <Bar dataKey="avgFillLevel" fill="#3B82F6" name="Average Fill Level (%)"barSize={100} />
           </BarChart>
         </ResponsiveContainer>
       </div>

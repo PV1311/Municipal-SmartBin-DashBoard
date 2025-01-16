@@ -98,17 +98,18 @@ export default function BinMap({ bins, onBinClick }: BinMapProps) {
         const fillLevelColor = bin.fillLevel > 90 ? 'text-red-600' : 
                              bin.fillLevel > 70 ? 'text-orange-500' :
                              bin.fillLevel > 50 ? 'text-blue-600' : 'text-green-600';
-        
-   popupRef.current.innerHTML = `
-    <div class="bg-white p-3 rounded-lg shadow-lg text-sm min-w-[200px] border border-gray-200">
-        <p class="font-semibold text-gray-800">${bin.location.address}</p>
-        <p class="text-gray-600">Type: ${bin.type}</p>
-        <p class="font-medium ${fillLevelColor}">Fill Level: ${bin.fillLevel}%</p>
-        <p class="text-xs text-gray-500 mt-1">Status: ${bin.status}</p>
-        <p class="text-xs text-gray-500">Area: ${bin.location.area}</p>
-        <p class="text-xs text-gray-500">Last Updated: ${new Date(bin.lastUpdated).toLocaleString()}</p>
-    </div>
-`;     
+        popupRef.current.innerHTML = `
+        <div class="bg-white p-3 rounded-lg shadow-lg text-sm min-w-[200px] border border-gray-200">
+          <p class="font-semibold text-gray-800">Bin ID: ${bin.id}</p>
+          <p class="text-gray-600">Latitude: ${bin.location.lat}</p>
+          <p class="text-gray-600">Longitude: ${bin.location.lng}</p>
+          <p class="font-semibold text-gray-800">${bin.location.address}</p>
+          <p class="text-gray-600">Area: ${bin.location.area}</p>
+          <p class="font-medium ${fillLevelColor}">Fill Level: ${bin.fillLevel}%</p>
+          <p class="text-xs text-gray-500 mt-1">Status: ${bin.status}</p>
+          <p class="text-xs text-gray-500">Last Updated: ${new Date(bin.lastUpdated).toLocaleString()}</p>
+        </div>
+      `;
         overlayRef.current.setPosition(event.coordinate);
       } else if (overlayRef.current) {
         overlayRef.current.setPosition(undefined);

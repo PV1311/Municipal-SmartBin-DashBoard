@@ -1,49 +1,60 @@
-import React, { useState } from 'react';
-import { Send, AlertTriangle } from 'lucide-react';
-import { indianStates } from '../data/indianStates';
+import React, { useState } from "react";
+import { Send, AlertTriangle } from "lucide-react";
+import { indianStates } from "../data/indianStates";
 
 interface WasteReportProps {
   selectedState: string;
   selectedCity: string;
 }
 
-export default function WasteReport({ selectedState: globalState, selectedCity: globalCity }: WasteReportProps) {
+const countryCodes = [{ country: "India", code: "+91" }];
+
+export default function WasteReport({
+  selectedState: globalState,
+  selectedCity: globalCity,
+}: WasteReportProps) {
   const [selectedState, setSelectedState] = useState(globalState);
   const [selectedCity, setSelectedCity] = useState(globalCity);
+  const [selectedCountryCode, setSelectedCountryCode] = useState("+91"); // Default to India
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    address: '',
-    description: '',
-    wasteType: 'general',
+    name: "",
+    phone: "",
+    address: "",
+    description: "",
+    wasteType: "general",
   });
 
   const cities = selectedState
-    ? indianStates.find(state => state.name === selectedState)?.cities || []
+    ? indianStates.find((state) => state.name === selectedState)?.cities || []
     : [];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Waste Report Submitted:', {
+    console.log("Waste Report Submitted:", {
       ...formData,
       state: selectedState,
       city: selectedCity,
+      countryCode: selectedCountryCode,
       timestamp: new Date().toISOString(),
     });
-    alert('Thank you for reporting! Municipal authorities have been notified.');
+    alert("Thank you for reporting! Municipal authorities have been notified.");
     setFormData({
-      name: '',
-      phone: '',
-      address: '',
-      description: '',
-      wasteType: 'general',
+      name: "",
+      phone: "",
+      address: "",
+      description: "",
+      wasteType: "general",
     });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -57,7 +68,10 @@ export default function WasteReport({ selectedState: globalState, selectedCity: 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Your Name
             </label>
             <input
@@ -72,25 +86,44 @@ export default function WasteReport({ selectedState: globalState, selectedCity: 
             />
           </div>
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="phone"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Phone Number
             </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="1234567890"
-            />
+            <div className="flex">
+              <select
+                value={selectedCountryCode}
+                onChange={(e) => setSelectedCountryCode(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                {countryCodes.map((country) => (
+                  <option key={country.code} value={country.code}>
+                    {country.country} {country.code}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="1234567890"
+              />
+            </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="reportState" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="reportState"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               State
             </label>
             <select
@@ -98,7 +131,7 @@ export default function WasteReport({ selectedState: globalState, selectedCity: 
               value={selectedState}
               onChange={(e) => {
                 setSelectedState(e.target.value);
-                setSelectedCity('');
+                setSelectedCity("");
               }}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
@@ -111,7 +144,10 @@ export default function WasteReport({ selectedState: globalState, selectedCity: 
             </select>
           </div>
           <div>
-            <label htmlFor="reportCity" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="reportCity"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               City
             </label>
             <select
@@ -132,7 +168,10 @@ export default function WasteReport({ selectedState: globalState, selectedCity: 
         </div>
 
         <div>
-          <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="address"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Location Address
           </label>
           <input
@@ -148,7 +187,10 @@ export default function WasteReport({ selectedState: globalState, selectedCity: 
         </div>
 
         <div>
-          <label htmlFor="wasteType" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="wasteType"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Type of Waste
           </label>
           <select
@@ -167,7 +209,10 @@ export default function WasteReport({ selectedState: globalState, selectedCity: 
         </div>
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Description
           </label>
           <textarea
@@ -192,7 +237,9 @@ export default function WasteReport({ selectedState: globalState, selectedCity: 
         </button>
 
         {!selectedCity && (
-          <p className="text-sm text-red-500">Please select a state and city before submitting a report.</p>
+          <p className="text-sm text-red-500">
+            Please select a state and city before submitting a report.
+          </p>
         )}
       </form>
     </div>
